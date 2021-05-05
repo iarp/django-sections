@@ -5,6 +5,7 @@ Add editable sections to a view.
 
 Installation
 ============
+::
 
     pip install -e git+https://github.com/iarp/django-sections.git#egg=django_sections
     pip install django-ckeditor
