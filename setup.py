@@ -125,8 +125,10 @@ METADATA = dict(
     tests_require=[],
     install_requires=[
         "Django >= 2.0",
-        "django-ckeditor",
     ],
+    extra_require={
+        "ckeditor": ["django-ckeditor"],
+    },
     include_package_data=True,
     classifiers=[
 
