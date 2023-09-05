@@ -54,3 +54,7 @@ INSTALLED_APPS = (
 
 STATIC_ROOT = "/tmp/"  # Dummy
 STATIC_URL = "/static/"
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+SECTIONS_USE_CKEDITOR = False

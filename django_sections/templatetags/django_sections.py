@@ -1,4 +1,7 @@
+import warnings
+
 from django import template
+from django.conf import settings
 from django.shortcuts import reverse
 from django.utils.safestring import mark_safe
 from django.contrib.auth.context_processors import auth
@@ -11,7 +14,9 @@ except ImportError:
 from django.template import Template, Context
 
 from django_sections.models import PageContentBlock
-from ckeditor.widgets import json_encode, CKEditorWidget
+
+if settings.SECTIONS_USE_CKEDITOR:
+    from ckeditor.widgets import json_encode, CKEditorWidget
 
 register = template.Library()
 
@@ -40,6 +45,9 @@ def page_section(context, page_id, location, blank_if_empty=True):
 
 @register.simple_tag(takes_context=True)
 def page_section_requirements(context, page_already_has_ckeditor=False):
+    if not settings.SECTIONS_USE_CKEDITOR:
+        warnings.warn('CKEditor is not enabled, do not use {% page_section_requirements %}')
+        return ""
     outputs = []
     try:
         if context['request'].user.has_perm('django_sections.change_pagecontentblock'):

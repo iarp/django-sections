@@ -1,7 +1,11 @@
 from django.db import models
 from django.conf import settings
 
-from ckeditor.fields import RichTextField
+if settings.SECTIONS_USE_CKEDITOR:
+    from ckeditor.fields import RichTextField
+    CONTENT_BLOCK_FIELD_TYPE = RichTextField
+else:
+    CONTENT_BLOCK_FIELD_TYPE = models.TextField
 
 
 class PageContentBlock(models.Model):
@@ -12,7 +16,7 @@ class PageContentBlock(models.Model):
 
     page_id = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    contents = RichTextField(blank=True)
+    contents = CONTENT_BLOCK_FIELD_TYPE(blank=True)
 
     inserted = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
