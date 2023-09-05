@@ -29,11 +29,8 @@ def page_section(context, page_id, location, blank_if_empty=True):
     if blank_if_empty and not pc.contents:
         return ""
 
-    auth_data = auth(context['request'])
-    auth_data['request'] = context['request']
-
-    context = Context(auth_data)
-    formatted_contents = Template(pc.contents).render(context=context)
+    context_wrapped = Context(context)
+    formatted_contents = Template(pc.contents).render(context=context_wrapped)
 
     return mark_safe("""
         <div class="page-section-wrapper {location}" data-page-section-id="{id}">
